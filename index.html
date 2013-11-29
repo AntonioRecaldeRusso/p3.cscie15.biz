@@ -24,7 +24,7 @@
 	function validateMove(event, ui, target)
 	{
 		object = detectObject(event);  	// detect object we are moving
-		addToTower(object, target);		
+		addToTower(object, target);	
 	}
 	
 	function detectObject(event)
@@ -36,6 +36,7 @@
 	function addToTower(object, target)
 	{
 		var peak
+		
 		switch (target) {
 		case 'A':
 			peak = peakA++;
@@ -50,8 +51,23 @@
 			break;
 		}
 		
-		row_destination = "" + target + peak;
-		$("#"+row_destination).html(object);
+		destination_row = "" + target + peak;
+		$('#' + destination_row).html(object);
+		$('#' + object.id).css({'left': 0, 'top': 0});			// ensures image stays inside of <td>
+		
+		switch (object.title) {
+		case 'A':
+			peakA--;
+			break;
+		case 'B':
+			peakB--;
+			break;
+		case 'C':
+			peakC--;
+			break;
+		}
+		console.log(object.title);
+		$('#' + object.id).attr('title', target);
 	}
 	
   </script>
@@ -72,7 +88,7 @@
 					<tr><td id='A3'></td></tr>
 					<tr><td id='A2'></td></tr>
 					<tr><td id='A1'></td></tr>
-					<tr><td id='A0'><img id='level0' class='draggable' class='ui-state-highlight' src='img/level0'></td></tr>
+					<tr><td id='A0'><img id='level0' title='A' class='draggable' class='ui-state-highlight' src='img/level0.png'></td></tr>
 				</table>
 			</div>	
 				
