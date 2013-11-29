@@ -1,0 +1,50 @@
+table {
+	border-spacing: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+tr {
+	
+}
+td {
+	background-color: yellow;
+	height: 27px;
+	width: 190px;
+	border: 1px solid red;
+	display: block;
+	text-align: center;
+}
+#wrapper {
+	width: 100%;
+}
+
+#game {
+	width: 80%;
+	height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid black;
+	vertical-align:top;
+}
+
+#tower1 {
+	background-color: lightgray;
+}
+
+#tower2 {
+	background-color: lightgray;
+	margin-left: 19%;
+	margin-right: 19%;
+}
+
+#tower3 {
+	background-color: lightgray;
+}
+
+.tower {
+	width: 20%;
+	height: 100%;
+	display: inline-block;
+	text-align: center;
+}
