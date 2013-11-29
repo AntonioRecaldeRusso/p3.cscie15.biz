@@ -8,21 +8,52 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
 <script>
+	var peakA = 1;
+	var peakB = 0;
+	var peakC = 0;
+	
  	$(function() {
 	    $( ".draggable" ).draggable({containment: '#game'});
 	    $( ".droppable" ).droppable({
 	      drop: function( event, ui ) {
-	        doThis(event, ui)
+	        validateMove(event, ui, this.id)
 	      }
 	    });
 	});
   
-	function doThis(event, ui)
+	function validateMove(event, ui, target)
 	{
-		movingObj = event.toElement;
-		movingObjId = movingObj.id;
-		console.log(movingObjId);
+		object = detectObject(event);  	// detect object we are moving
+		addToTower(object, target);		
 	}
+	
+	function detectObject(event)
+	{
+		moving_obj = event.toElement;
+		return moving_obj;	
+	}
+	
+	function addToTower(object, target)
+	{
+		var peak
+		switch (target) {
+		case 'A':
+			peak = peakA++;
+			break; 
+			
+		case 'B':
+			peak = peakB++;
+			break;
+			
+		case 'C':
+			peak = peakC++;
+			break;
+		}
+		
+		row_destination = "" + target + peak;
+		$("#"+row_destination).html(object);
+	}
+	
   </script>
 
 
@@ -33,7 +64,7 @@
 	
 		<div id='game'>
 			<div id='tower1' class='tower' class='droppable'>
-				<table id='tableA' class='droppable'> 
+				<table id='A' class='droppable'> 
 					<tr><td id='A7'></td></tr>
 					<tr><td id='A6'></td></tr>
 					<tr><td id='A5'></td></tr>
@@ -41,12 +72,12 @@
 					<tr><td id='A3'></td></tr>
 					<tr><td id='A2'></td></tr>
 					<tr><td id='A1'></td></tr>
-					<tr><td id='A0'><img id='img0' class='draggable' class='ui-state-highlight' src='img/_hanoiRed.png'></td></tr>
+					<tr><td id='A0'><img id='level0' class='draggable' class='ui-state-highlight' src='img/level0'></td></tr>
 				</table>
 			</div>	
 				
 			<div id='tower2' class='tower'>
-				<table id='tableB' class='droppable'> 
+				<table id='B' class='droppable'> 
 					<tr><td id='B7'></td></tr>
 					<tr><td id='B6'></td></tr>
 					<tr><td id='B5'></td></tr>
@@ -59,7 +90,7 @@
 			</div>
 			
 			<div id='tower3' class='tower'>
-				<table id='tableC' class='droppable'> 
+				<table id='C' class='droppable'> 
 					<tr><td id='C7'></td></tr>
 					<tr><td id='C6'></td></tr>
 					<tr><td id='C5'></td></tr>
