@@ -8,9 +8,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
 <script>
-	var peakA = 1;
-	var peakB = 0;
-	var peakC = 0;
+	game_size = 7;
+	var peakA = 7;				// top level of tower A
+	var peakB = 0;				// top level of tower B
+	var peakC = 0;				// top level of tower C
+	
+	var pos = [];				// store the last position of each block in array pos
+	for (var i = 0; i < (game_size); i++)
+		pos['level' + i] = ['A', i];		// [0] current tower, [1] the current level.
+	
+	
 	
  	$(function() {
 	    $( ".draggable" ).draggable({containment: '#game'});
@@ -24,6 +31,10 @@
 	function validateMove(event, ui, target)
 	{
 		object = detectObject(event);  	// detect object we are moving
+		
+		if (pos[object.id][0] == target)
+			
+		
 		addToTower(object, target);	
 	}
 	
@@ -40,32 +51,40 @@
 		switch (target) {
 		case 'A':
 			peak = peakA++;
+			console.log('tower a now: ' + peakA);
 			break; 
 			
 		case 'B':
 			peak = peakB++;
+			console.log('tower b now: ' + peakB);
 			break;
 			
 		case 'C':
 			peak = peakC++;
+			console.log('tower c now: ' + peakC);
 			break;
 		}
-		
-		destination_row = "" + target + peak;
-		$('#' + destination_row).html(object);
-		$('#' + object.id).css({'left': 0, 'top': 0});			// ensures image stays inside of <td>
 		
 		switch (object.title) {
 		case 'A':
 			peakA--;
+			console.log('origin tower a now: ' + peakA);
 			break;
 		case 'B':
 			peakB--;
+			console.log('origin tower b now: ' + peakB);
 			break;
 		case 'C':
 			peakC--;
+			console.log('origin tower c now: ' + peakC);
 			break;
 		}
+		
+		destination_row = "" + target + peak;
+		console.log('drop to' + destination_row);
+		$('#' + destination_row).html(object);
+		$('#' + object.id).css({'left': 0, 'top': 0});			// ensures image stays inside of <td>
+		
 		console.log(object.title);
 		$('#' + object.id).attr('title', target);
 	}
@@ -82,12 +101,12 @@
 			<div id='tower1' class='tower' class='droppable'>
 				<table id='A' class='droppable'> 
 					<tr><td id='A7'></td></tr>
-					<tr><td id='A6'></td></tr>
-					<tr><td id='A5'></td></tr>
-					<tr><td id='A4'></td></tr>
-					<tr><td id='A3'></td></tr>
-					<tr><td id='A2'></td></tr>
-					<tr><td id='A1'></td></tr>
+					<tr><td id='A6'><img id='level6' title='A' class='draggable' class='ui-state-highlight' src='img/level6.png'></td></tr>
+					<tr><td id='A5'><img id='level5' title='A' class='draggable' class='ui-state-highlight' src='img/level5.png'></td></tr>
+					<tr><td id='A4'><img id='level4' title='A' class='draggable' class='ui-state-highlight' src='img/level4.png'></td></tr>
+					<tr><td id='A3'><img id='level3' title='A' class='draggable' class='ui-state-highlight' src='img/level3.png'></td></tr>
+					<tr><td id='A2'><img id='level2' title='A' class='draggable' class='ui-state-highlight' src='img/level2.png'></td></tr>
+					<tr><td id='A1'><img id='level1' title='A' class='draggable' class='ui-state-highlight' src='img/level1.png'></td></tr>
 					<tr><td id='A0'><img id='level0' title='A' class='draggable' class='ui-state-highlight' src='img/level0.png'></td></tr>
 				</table>
 			</div>	

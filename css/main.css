@@ -5,10 +5,9 @@ table {
 }
 
 td {
-	background-color: yellow;
 	height: 27px;
 	width: 190px;
-	border: 1px solid red;
+	border: 1px solid lightgray;
 	display: block;
 	text-align: center;
 }
@@ -26,17 +25,16 @@ td {
 }
 
 #tower1 {
-	background-color: lightgray;
+	
 }
 
 #tower2 {
-	background-color: lightgray;
 	margin-left: 19%;
 	margin-right: 19%;
 }
 
 #tower3 {
-	background-color: lightgray;
+	
 }
 
 .tower {
