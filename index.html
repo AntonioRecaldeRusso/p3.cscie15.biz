@@ -14,23 +14,26 @@
 	var height_B = 0;				// top level of tower B
 	var height_C = 0;				// top level of tower C
 	
-	board['A'] = [];			// allows retrieval of block id by position
-	board['B'] = [];
-	board['C'] = [];
+	board = [];
+	board["A"] = new Array();
+	board["B"] = new Array();
+	board["C"] = new Array();
 	
-	var pos = [];				// store the last position of each block. Allows retrieval of position by block id.
+	var pos = [];				// store the last position of each block in array pos
+	var drag_count = 0;
 	
-	
+	initialize();
 	
  	$(function() {
- 		
- 		setUpGame();
- 		
 	    $( '.draggable' ).draggable({
 	    	containment: '#game', 
 	    	revert: "invalid",
 	    	start: function() {
 	    		$('#' + pos[this.id][0]).droppable('option', 'disabled', true);
+	    	},
+	    	drag: function(event, ui) {
+	    		
+	    		// abort drag logic here	
 	    	}
 	    }
  	);
@@ -41,15 +44,16 @@
 	      }
 	    });
 	});
-  
-	function setUpGame()
+		
+	function initialize()
 	{
+		for (var i = 0; i < (game_size); i++)
+			{
+				pos['level' + i] = ['A', i];		// [0] current tower, [1] the current level.
+				board["A"][i] = 'level' + i;
+				console.log(board["A"][i]);
+			}
 			
-		for (var i = 0; i < (game_size - 1); i++)
-		{
-			pos['level' + i] = ['A', i];					// [0] current tower, [1] the current level.
-			$("#level" + i).draggable("disable");			// disable draggable on non-top blocks
-		}
 		
 	}
 		
@@ -125,10 +129,7 @@
 	function updateTowers(object_id, target, height, last_destination)
 	{
 		pos[object_id] = [target, height, last_destination];		// update the position coordinates of the element just dropped
-		
-		
 	}
-	
   </script>
 
 
