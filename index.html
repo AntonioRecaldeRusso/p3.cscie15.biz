@@ -8,62 +8,80 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
 <script>
-	game_size = 7;
-	
-	var height_A = 7;				// top level of tower A
-	var height_B = 0;				// top level of tower B
-	var height_C = 0;				// top level of tower C
+	const GAME_SIZE = 7;
+	const NUM_TOWERS = 3;
 	
 	board = [];
 	board["A"] = new Array();
 	board["B"] = new Array();
 	board["C"] = new Array();
 	
+	height_A = board ["A"]["height"] = 7;				// top level of tower A
+	height_B = board ["B"]["height"] = 0;				// top level of tower B
+	height_C = board ["C"]["height"] = 0;				// top level of tower C
+	
+	
 	var pos = [];				// store the last position of each block in array pos
-	var drag_count = 0;
 	
 	initialize();
 	
- 	$(function() {
+	$(function() {
 	    $( '.draggable' ).draggable({
 	    	containment: '#game', 
 	    	revert: "invalid",
 	    	start: function() {
-	    		$('#' + pos[this.id][0]).droppable('option', 'disabled', true);
-	    	},
-	    	drag: function(event, ui) {
+	    		console.log(pos[this.id]);
+	    		$('#' + pos[this.id][0]).droppable("disable");		// cannot drop in origin tower
 	    		
-	    		// abort drag logic here	
+	    		// do not drop over smaller....
+	    		for (var tower in board)
+	    		{
+	    			top_level = board[tower]["height"] - 1;
+	    			
+	    			console.log("top level " + tower + " " + board[tower][top_level]);
+	    			console.log("this.id " + this.id);
+	    			
+	    			if (this.id <= board[tower][top_level]) // if this is not bigger than peakA, disable draggable
+	    				$("#" + tower).droppable("disable");
+	    		}
+	    		
+	    		if (!(this.id == board["A"][ (board["A"]["height"] - 1) ] || this.id == board["B"][(board["B"]["height"] - 1)] || this.id == board["C"][(board["C"]["height"] - 1)]))
+	    		{
+	    			console.log("inside if statement");
+	    			return false;
+	    		}
+	    		
+	    	}, // end start: function
+	    	
+	    	stop: function() {
+	    		
+	    		for (var tower in board)				// restore droppable in all towers
+	    			$('#' + tower).droppable("enable");
+	    		
 	    	}
 	    }
  	);
 	    $( ".droppable" ).droppable({
-	      	drop: function( event, ui ) {
-	      		$('#' + pos[event.toElement.id][0]).droppable('option', 'disabled', false);
-	    		validateMove(event, ui, this.id);
+	    	activeClass: "active",
+	    	drop: function( event, ui ) {
+	    		processMove(event, ui, this.id);
 	      }
 	    });
 	});
 		
 	function initialize()
 	{
-		for (var i = 0; i < (game_size); i++)
+		for (var i = 0; i < (GAME_SIZE); i++)
 			{
-				pos['level' + i] = ['A', i];		// [0] current tower, [1] the current level.
+				pos['level' + i] = ['A', i, 'A'+i];		// [0] current tower, [1] the current level.
 				board["A"][i] = 'level' + i;
-				console.log(board["A"][i]);
 			}
-			
-		
 	}
 		
-	function validateMove(event, ui, target)
+	function processMove(event, ui, target)
 	{
 		object = detectObject(event);  	// detect object we are moving
 		origin = pos[object.id][0];
-		console.log("origin " + origin);
-		console.log("target " + target);
-
 		addToTower(object, target);	
 	}
 	
@@ -76,46 +94,20 @@
 	function addToTower(object, target)
 	{
 		var height
+		var origin = pos[object.id][0]; console.log("origin " + origin);
 		
-		switch (object.title) {
-		case 'A':
-			height_A--;
-			console.log('origin tower a now: ' + height_A);
-			break;
-		case 'B':
-			height_B--;
-			console.log('origin tower b now: ' + height_B);
-			break;
-		case 'C':
-			height_C--;
-			console.log('origin tower c now: ' + height_C);
-			break;
-		}
-		
-		
-		switch (target) {
-		case 'A':
-			height = height_A++;
-			console.log('tower a now: ' + height_A);
-			break; 
-			
-		case 'B':
-			height = height_B++;
-			console.log('tower b now: ' + height_B);
-			break;
-			
-		case 'C':
-			height = height_C++;
-			console.log('tower c now: ' + height_C);
-			break;
-		}
+		board[ (pos[object.id][0]) ]["height"]--;		
+		height = board[target]["height"]++;		
 		
 		destination_row = "" + target + height;
-		console.log(object);
 		$('#' + object.id).css({'left': 0, 'top': 0});			// ensures image stays inside of <td>
-		$('#' + object.id).attr('title', target);
 		$('#' + destination_row).html(object);
 		
+	
+		pos[object.id] = [target, height, destination_row];
+		board[target][height] = board[origin].pop();
+		console.log(board[target]);
+		console.log(pos[board[target][height]]);
 		
 		/**
 		 *	This method updates the values associated with each level block of the tower
@@ -130,6 +122,7 @@
 	{
 		pos[object_id] = [target, height, last_destination];		// update the position coordinates of the element just dropped
 	}
+	
   </script>
 
 
@@ -142,13 +135,13 @@
 			<div id='tower1' class='tower'>
 				<table id='A' class='droppable'> 
 					<tr><td id='A7'></td></tr>
-					<tr><td id='A6'><img id='level6' title='A' class='draggable ui-state-highlight' src='img/level6.png'></td></tr>
-					<tr><td id='A5'><img id='level5' title='A' class='draggable ui-state-highlight' src='img/level5.png'></td></tr>
-					<tr><td id='A4'><img id='level4' title='A' class='draggable ui-state-highlight' src='img/level4.png'></td></tr>
-					<tr><td id='A3'><img id='level3' title='A' class='draggable ui-state-highlight' src='img/level3.png'></td></tr>
-					<tr><td id='A2'><img id='level2' title='A' class='draggable ui-state-highlight' src='img/level2.png'></td></tr>
-					<tr><td id='A1'><img id='level1' title='A' class='draggable ui-state-highlight' src='img/level1.png'></td></tr>
-					<tr><td id='A0'><img id='level0' title='A' class='draggable ui-state-highlight' src='img/level0.png'></td></tr>
+					<tr><td id='A6'><img id='level6' class='draggable ui-widget-content' src='img/level6.png'></td></tr>
+					<tr><td id='A5'><img id='level5' class='draggable ui-widget-content' src='img/level5.png'></td></tr>
+					<tr><td id='A4'><img id='level4' class='draggable ui-widget-content' src='img/level4.png'></td></tr>
+					<tr><td id='A3'><img id='level3' class='draggable ui-widget-content' src='img/level3.png'></td></tr>
+					<tr><td id='A2'><img id='level2' class='draggable ui-widget-content' src='img/level2.png'></td></tr>
+					<tr><td id='A1'><img id='level1' class='draggable ui-widget-content' src='img/level1.png'></td></tr>
+					<tr><td id='A0'><img id='level0' class='draggable ui-widget-content' src='img/level0.png'></td></tr>
 				</table>
 			</div>	
 				

@@ -43,3 +43,7 @@ td {
 	display: inline-block;
 	text-align: center;
 }
+
+.active {
+	background-color: yellow;
+}
