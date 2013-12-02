@@ -90,6 +90,7 @@
 	var number_of_moves;
 	var minimum_number_of_moves = [0, 1 , 3, 7, 15, 31, 63, 127];
 	image_objects = new Array();
+	obj = null;
 	
 	for (var i = 0; i < MAX_SIZE; i++)
 		image_objects[i] = $("#level" + i).get();
@@ -137,7 +138,8 @@
 		    		if (!(this.id == tower["A"][ (tower["A"].length - 1) ] || this.id == tower["B"][(tower["B"].length - 1)] || this.id == tower["C"][(tower["C"].length - 1)]))
 		    			return false;
 		    		
-		    		
+		    		obj = this;
+		    		console.log(obj);
 		    	}, // end start: function
 		    	
 		    	stop: function() {
@@ -182,7 +184,6 @@
 			
 		function processMove(event, ui, target)
 		{
-			obj = event.toElement;  	// detect obj we are moving
 			origin = pos[obj.id][0];
 			addToTower(obj, target);
 			
