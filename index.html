@@ -10,9 +10,9 @@
 </head>
 
 <body>
+		
 	<div id='wrapper'>
 		<h1 id="header"></h1>
-		
 		
 		<div id="game_settings">
 			Select number of rows: <br>
@@ -70,7 +70,13 @@
 			</div>	
 		</div>
 		<h2 id="instructions">Use mouse to move blocks. Move all blocks to right-most tower to win.</h2>
+		
+		<div id="moves_display">
+			<div id="min"></div>
 			
+			<div id="curr">0</div>
+		</div>
+		
 	</div>
 	
 	
@@ -81,6 +87,8 @@
 	
 	<script>
 	const MAX_SIZE = 7;
+	var number_of_moves;
+	var minimum_number_of_moves = [0, 1 , 3, 7, 15, 31, 63, 127];
 	image_objects = new Array();
 	
 	for (var i = 0; i < MAX_SIZE; i++)
@@ -96,14 +104,12 @@
 		const NUM_TOWERS = 3;
 		var origin;
 		
+		number_of_moves = 0;
+		
 		tower = [];
 		tower["A"] = new Array();
 		tower["B"] = new Array();
 		tower["C"] = new Array();
-		
-		tower ["A"]["height"] = GAME_SIZE;		// top level of tower A
-		tower ["B"]["height"] = 0;				// top level of tower B
-		tower ["C"]["height"] = 0;				// top level of tower C
 		
 		var pos = [];				// store the last position of each block in array pos
 		
@@ -120,23 +126,23 @@
 		    		$('#' + pos[this.id][0]).droppable("disable");		// cannot drop in origin tower
 		    		
 		    		// do not drop over smaller....
-		    		for (var tower in tower)
+		    		for (var t in tower)
 		    		{
-		    			top_level = tower[tower]["height"] - 1;
+		    			top_level = tower[t].length - 1;
 		    			
-		    			if (this.id <= tower[tower][top_level]) // if this is not bigger than peakA, disable draggable
-		    				$("#" + tower).droppable("disable");
+		    			if (this.id <= tower[t][top_level]) // if this is not bigger than peak ABC, disable draggable
+		    				$("#" + t).droppable("disable");
 		    		}
 		    		
-		    		if (!(this.id == tower["A"][ (tower["A"]["height"] - 1) ] || this.id == tower["B"][(tower["B"]["height"] - 1)] || this.id == tower["C"][(tower["C"]["height"] - 1)]))
+		    		if (!(this.id == tower["A"][ (tower["A"].length - 1) ] || this.id == tower["B"][(tower["B"].length - 1)] || this.id == tower["C"][(tower["C"].length - 1)]))
 		    			return false;
 		    		
 		    		
 		    	}, // end start: function
 		    	
 		    	stop: function() {
-		    		for (var tower in tower)				// restore droppable in all towers
-		    			$('#' + tower).droppable("enable");
+		    		for (var t in tower)				// restore droppable in all towers
+		    			$('#' + t).droppable("enable");
 		    		
 		    	}
 		    }
@@ -166,10 +172,12 @@
 					pos['level' + i] = ['A', i, 'A'+i];		// [0] current tower, [1] the current level.
 					tower["A"][i] = 'level' + i;
 					
-				//	console.log("inside for loop " + typeof size);
 					if (size !=  "number")
 						$("#A" + i).html(image_objects[i]);
 			}
+			
+			$("#min").html(minimum_number_of_moves[GAME_SIZE]);
+			$("#curr").html(number_of_moves);
 		}
 			
 		function processMove(event, ui, target)
@@ -178,19 +186,22 @@
 			origin = pos[obj.id][0];
 			addToTower(obj, target);
 			
-			if (tower["C"]["height"] == GAME_SIZE)
+			$("#curr").html(++number_of_moves);
+			
+			if (tower["C"].length == GAME_SIZE)
 			{
 				game_end = true;
-				alert('       YOU WIN!!\nTo play again click "New Game" button');
+				alert('\tYOU WIN!!\n' +
+						'To play again click the "New Game" button.\nYou finished this puzzle in ' + number_of_moves + ' move(s).\n' + 
+						'Best possible: ' + minimum_number_of_moves[GAME_SIZE] + '.');
 			}
 		}
 		
 		function addToTower(obj, target)
 		{
 			var height
-			
-			tower[ (pos[obj.id][0]) ]["height"]--;		
-			height = tower[target]["height"]++;		
+			// here
+			height = tower[target].length;		
 			
 			destination_row = "" + target + height;
 			$('#' + obj.id).css({'left': 0, 'top': 0});			// ensures image stays inside of <td>
@@ -214,7 +225,9 @@
 
   </script>
 	
-
+	
+	
+	
 </body>
 
 </html>
