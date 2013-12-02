@@ -33,7 +33,7 @@ table {
 	margin-bottom: 1%;
 	border: 1px solid lightgray;
 	border-radius: 30px;
-	height: 98%;
+	height: 98.5%;
 }
 
 td {
@@ -98,4 +98,27 @@ td {
     -webkit-box-shadow: 0 0 5px lightblue; 
     -moz-box-shadow: 0 0 5px lightblue; 
     border: 1px solid lightblue;
+}
+
+#moves_display {
+	width: 25%;
+	display: inline-block;
+}
+
+#min {
+	width: 45%;
+	margin: 0;
+	border: 1px solid red;
+	border-radius: 5px;
+	background-color: white;
+	float: left;
+}
+
+#curr {
+	width: 45%;
+	margin: 0;
+	border: 1px solid limegreen;
+	border-radius: 5px;
+	background-color: white;
+	float: right;
 }
