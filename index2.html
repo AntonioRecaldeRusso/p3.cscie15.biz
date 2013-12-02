@@ -72,9 +72,9 @@
 		<h2 id="instructions">Use mouse to move blocks. Move all blocks to right-most tower to win.</h2>
 		
 		<div id="moves_display">
-			<div id="min">123</div>
+			<div id="min"></div>
 			
-			<div id="curr">456</div>
+			<div id="curr">0</div>
 		</div>
 		
 	</div>
@@ -151,7 +151,6 @@
 		    	activeClass: "active",
 		    	drop: function( event, ui ) {
 		    		processMove(event, ui, this.id);
-		    		number_of_moves++;
 		    	}
 		    });
 		});
@@ -176,6 +175,9 @@
 					if (size !=  "number")
 						$("#A" + i).html(image_objects[i]);
 			}
+			
+			$("#min").html(minimum_number_of_moves[GAME_SIZE]);
+			$("#curr").html(number_of_moves);
 		}
 			
 		function processMove(event, ui, target)
@@ -184,10 +186,14 @@
 			origin = pos[obj.id][0];
 			addToTower(obj, target);
 			
+			$("#curr").html(++number_of_moves);
+			
 			if (tower["C"].length == GAME_SIZE)
 			{
 				game_end = true;
-				alert('       YOU WIN!!\nTo play again click "New Game" button');
+				alert('\tYOU WIN!!\n' +
+						'To play again click the "New Game" button.\nYou finished this puzzle in ' + number_of_moves + ' move(s).\n' + 
+						'Best possible: ' + minimum_number_of_moves[GAME_SIZE] + '.');
 			}
 		}
 		
