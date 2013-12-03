@@ -4,6 +4,8 @@
 /**
  * 
  * This JavaScript file handles the logic required to run the Towers of Hanoi on a webpage.
+ * It drags image objects and drops them into <table> tags, processing all the information that
+ * such action entails.
  * 
  * @author Antonio Recalde
  * @version 12/01/2013
@@ -58,7 +60,7 @@ function TowersOfHanoi(size)
 	 * These "tower" arrays will keep track of the coordinates of each element.
 	 * They will store the id value of the objects that occupy each position.
 	 * 
-	 * These arrays allow for the retrieval of object id's by position
+	 * These arrays allow for the retrieval of object id's by position.
 	 * 
 	 *-----------------------------------------------------*/
 	tower = [];
@@ -66,8 +68,8 @@ function TowersOfHanoi(size)
 	tower["B"] = new Array();
 	tower["C"] = new Array();
 	
-	
-	var pos = [];								// allows for the retrieval of coordinates by the object they hold
+	// allows for the retrieval of coordinates by object id.
+	var pos = [];								
 	
 	
 	initialize();								
@@ -89,7 +91,9 @@ function TowersOfHanoi(size)
 	    		for (var t in tower)
 	    		{
 	    			top_level = tower[t].length - 1;
-	    			if (this.id <= tower[t][top_level]) 			// compares ids.. if the objects id is heigher than the target, the drop is disabled
+	    			
+	    			// compares ids.. if the object's id is heigher than the tower's highest element id, the drop is disabled.. Thus, you cannot drop on top of a smaller block. 
+	    			if (this.id <= tower[t][top_level])
 	    				$("#" + t).droppable("disable");			
 	    		}
 	    		
@@ -144,15 +148,19 @@ function TowersOfHanoi(size)
 				if (size !=  "start")
 					$("#A" + i).html(image_objects[i]);			// if the game is restarting, reload the cells with blocks depending on GAME_SIZE
 		}
-		
-		$("#min").html(min_moves[GAME_SIZE]);
-		$("#curr").html(number_of_moves);
+		$("#min").html(min_moves[GAME_SIZE]);					// set the min div to its corresponding value (minimum number of moves to finish the game)
+		$("#curr").html(number_of_moves);						
 	}
-		
+	
+	/**
+	 * This function processes the data gathered by the droppable() method in order to produce the effects of a block move
+	 * 
+	 * @param target
+	 */
 	function processMove(target)
 	{
-		origin = pos[obj.id][0];
-		addToTower(obj, target);
+		origin = pos[obj.id][0];		
+		addToTower(obj, target);			
 		
 		$("#curr").html(++number_of_moves);
 		
@@ -164,29 +172,38 @@ function TowersOfHanoi(size)
 					'Best possible: ' + min_moves[GAME_SIZE] + '.');
 		}
 	}
-	
+	/**
+	 * Updates arrays keeping track of the blocks positions, and updates its destination <td>'s html field with the object just moved
+	 * 
+	 * @param obj
+	 * @param target
+	 */
 	function addToTower(obj, target)
 	{
 		var height;
 		// here
-		height = tower[target].length;		
+		height = tower[target].length;						// get the height of the tower we are moving the block onto
 		
-		destination_row = "" + target + height;
+		destination_row = "" + target + height;				// this should equal is the <td> destination's id
 		$('#' + obj.id).css({'left': 0, 'top': 0});			// ensures image stays inside of <td>
-		$('#' + destination_row).html(obj);
+		$('#' + destination_row).html(obj);					// this moves the block into the desired <td>
 		
 	
-		pos[obj.id] = [target, height, destination_row];
-		tower[target][height] = tower[origin].pop();
-		
-		
-		pos[obj.id] = [target, height, destination_row];		// update the position coordinates of the element just dropped
+		pos[obj.id] = [target, height, destination_row];	// update position of object
+		tower[target][height] = tower[origin].pop();		// pop last element from origin array, and place it in the new array it just got moved into
 	}
-}	
+} // end of TowersOfHanoi()	
 	
+	/*-----------------------------------------------------------------------
+	 * 
+	 * The next segment of code listens for clicks on the "New Game" button.
+	 * Then, it creates a new TowersOfHanoi object with the size picked via a dropdown list.
+	 * This, will start a new game with "new_size" blocks.
+	 * 
+	 *----------------------------------------------------------------------*/
 	$(document).ready(function(){ 
 	    $("button").click(function () {
-	        var new_size = $("select[name=size]").val();
-	        $game = new TowersOfHanoi(new_size);
+	        var new_size = $("select[name=size]").val();	// the the value selected in the drop down list
+	        $game = new TowersOfHanoi(new_size);			// starts new game
 	    });
 	});
