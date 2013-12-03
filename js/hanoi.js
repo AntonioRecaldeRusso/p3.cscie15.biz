@@ -80,7 +80,12 @@ function TowersOfHanoi(size)
 	    	containment: '#game', 
 	    	revert: "invalid",
 	    	start: function() {
-	    		if (game_end)					// disables movement of blocks when game has been finished
+	    		
+	    		// Save reference to object being to drag for later use outside of this function
+	    		obj = this;									
+	    		
+	    		// disables movement of blocks when game has been finished
+	    		if (game_end)					
 	    			return false;
 	    		
 	    		// Ensures that the user cannot drop in the same tower it came from. Instead, it simply reverts back.
@@ -101,11 +106,15 @@ function TowersOfHanoi(size)
 	    		if (!(this.id == tower["A"][ (tower["A"].length - 1) ] || this.id == tower["B"][(tower["B"].length - 1)] || this.id == tower["C"][(tower["C"].length - 1)]))
 	    			return false;
 	    		
-	    		obj = this;							// save reference to the object being dragged
-	    	}, // end start: function
+	    		
+	    		// add effects to object to drag
+	    		$("#" + this.id).addClass("active");
+	    	},
 	    	
 	    	stop: function() {
-	    		for (var t in tower)				// restores droppable to all towers once the move is finalized
+	    		$("#" + this.id).removeClass("active");		// remove effects from object dragged upon stop
+
+	    		for (var t in tower)						// restores droppable to all towers once the move is finalized
 	    			$('#' + t).droppable("enable");
 	    		
 	    	}
