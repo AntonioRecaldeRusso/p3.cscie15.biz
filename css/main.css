@@ -6,6 +6,24 @@ img {
 	border-radius: 5px;
 }
 
+table {
+	border-spacing: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	border: 1px solid lightgray;
+	border-radius: 30px;
+	height: 98.5%;
+}
+
+td {
+	height: 27px;
+	width: 190px;
+	display: block;
+	text-align: center;
+}
+
 #header {
 	background: url(../img/header.jpg);
 	width: 799px;
@@ -23,24 +41,6 @@ img {
 	border-radius: 5px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-table {
-	border-spacing: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 1%;
-	margin-bottom: 1%;
-	border: 1px solid lightgray;
-	border-radius: 30px;
-	height: 98.5%;
-}
-
-td {
-	height: 27px;
-	width: 190px;
-	display: block;
-	text-align: center;
 }
 
 #instructions {
@@ -73,31 +73,20 @@ td {
 	background-color: white;
 }
 
-#tower1 {
-	
-}
+#tower1 {}
 
 #tower2 {
 	margin-left: 13.5%;
 	margin-right: 13.5%;
 }
 
-#tower3 {
-
-}
+#tower3 {}
 
 .tower {
 	width: 24%;
 	height: 100%;
 	display: inline-block;
 	text-align: center;
-}
-
-.active {
- 	box-shadow: 0 0 5px lightblue;
-    -webkit-box-shadow: 0 0 5px lightblue; 
-    -moz-box-shadow: 0 0 5px lightblue; 
-    border: 1px solid lightblue;
 }
 
 #moves_display {
@@ -121,4 +110,11 @@ td {
 	border-radius: 5px;
 	background-color: white;
 	float: right;
+}
+
+.active {							/* this class activates whenever a image object is being dragged given certain conditions */
+ 	box-shadow: 0 0 5px lightblue;
+    -webkit-box-shadow: 0 0 5px lightblue; 
+    -moz-box-shadow: 0 0 5px lightblue; 
+    border: 1px solid lightblue;
 }
