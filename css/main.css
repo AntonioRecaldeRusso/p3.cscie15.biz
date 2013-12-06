@@ -15,14 +15,7 @@ table {
 	border: 1px solid lightgray;
 	border-radius: 30px;
 	height: 98.5%;
-}
-
-table#A {
-	float: left;
-}
-
-table#C {
-	float: right;
+	width: 99%;
 }
 
 td {
@@ -82,23 +75,17 @@ td {
 	
 }
 
-#tower1 {
-	padding-left: 2px;
-	float: left;
-}
+#tower1 {}
 
 #tower2 {
-	margin-left: 0%;
-	margin-right: 0%;
+	margin-left: 13.5%;
+	margin-right: 13.5%;
 }
 
-#tower3 {
-	padding-right: 2px;
-	float: right;
-}
+#tower3 {}
 
 .tower {
-	width: 33%;
+	width: 24%;
 	height: 100%;
 	display: inline-block;
 	text-align: center;
