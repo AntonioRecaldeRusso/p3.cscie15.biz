@@ -1,0 +1,133 @@
+body {
+	background: url(../img/background-image.jpg);
+}
+
+img {
+	border-radius: 5px;
+}
+
+table {
+	border-spacing: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	border: 1px solid lightgray;
+	border-radius: 30px;
+	height: 98.5%;
+	width: 99%;
+}
+
+table#A {
+	
+}
+
+table#C {
+	
+}
+
+td {
+	height: 27px;
+	width: 190px;
+	display: block;
+	text-align: center;
+}
+
+#header {
+	background: url(../img/header.jpg);
+	width: 799px;
+	height: 145px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0%;
+	margin-bottom: 5%;
+}
+
+#game_settings {
+	height: 10%;
+	width: 15%;
+	background-color: white;
+	border-radius: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#instructions {
+	background-color: white;
+	width: 75%;
+	margin-right: auto;
+	margin-left: auto;
+	border-radius: 5px;
+	box-shadow: 0 0 5px yellow;
+	-webkit-box-shadow: 0 0 5px yellow; 
+    -moz-box-shadow: 0 0 5px yellow; 
+}
+
+#wrapper {
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#game {
+	width: 900px;
+	height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	vertical-align:top;
+	border-radius: 30px;
+	overflow: hidden;
+	background-color: white;
+	
+}
+
+#tower1 {
+	
+}
+
+#tower2 {
+	margin-left: 1%;
+	margin-right: 1%;
+}
+
+#tower3 {
+}
+
+.tower {
+	width: 24%;
+	height: 100%;
+	display: inline-block;
+	text-align: center;
+}
+
+#moves_display {
+	width: 25%;
+	display: inline-block;
+}
+
+#min {
+	width: 45%;
+	margin: 0;
+	border: 1px solid red;
+	border-radius: 5px;
+	background-color: white;
+	float: left;
+}
+
+#curr {
+	width: 45%;
+	margin: 0;
+	border: 1px solid limegreen;
+	border-radius: 5px;
+	background-color: white;
+	float: right;
+}
+
+.active {							/* this class activates whenever a image object is being dragged given certain conditions */
+ 	box-shadow: 0 0 5px lightblue;
+    -webkit-box-shadow: 0 0 5px lightblue; 
+    -moz-box-shadow: 0 0 5px lightblue; 
+    border: 1px solid lightblue;
+}
