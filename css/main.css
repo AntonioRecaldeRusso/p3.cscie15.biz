@@ -71,16 +71,21 @@ td {
 	border-radius: 30px;
 	overflow: hidden;
 	background-color: white;
+	
 }
 
-#tower1 {}
+#tower1 {
+	float: left;
+}
 
 #tower2 {
-	margin-left: 6%;
-	margin-right: 6%;
+	margin-left: 0%;
+	margin-right: 0%;
 }
 
-#tower3 {}
+#tower3 {
+	float: right;
+}
 
 .tower {
 	width: 24%;
