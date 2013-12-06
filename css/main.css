@@ -17,6 +17,14 @@ table {
 	height: 98.5%;
 }
 
+table#A {
+	float: left;
+}
+
+table#C {
+	float: right;
+}
+
 td {
 	height: 27px;
 	width: 190px;
@@ -75,6 +83,7 @@ td {
 }
 
 #tower1 {
+	padding-left: 2px;
 	float: left;
 }
 
@@ -84,11 +93,12 @@ td {
 }
 
 #tower3 {
+	padding-right: 2px;
 	float: right;
 }
 
 .tower {
-	width: 24%;
+	width: 33%;
 	height: 100%;
 	display: inline-block;
 	text-align: center;
